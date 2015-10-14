@@ -13,8 +13,7 @@ use pocketmine\event\Listener;
 use pocketmine\utils\Config;
 use pocketmine\network\protocol\AddItemEntityPacket;
 use pocketmine\network\protocol\RemoveEntityPacket;
-use pocketmine\network\protocol\AddPlayerPacket;
-use pocketmine\network\protocol\RemovePlayerPacket;
+use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\command\PluginCommand;
 use pocketmine\utils\TextFormat;
 use pocketmine\event\block\BlockBreakEvent;
@@ -28,6 +27,7 @@ use pocketmine\Player;
 use pocketmine\entity\Entity;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\entity\Item as ItemEntity;
 
 class EconomyGamble extends PluginBase implements Listener {
 	public $messages, $db; // 메시지, DB
@@ -63,19 +63,27 @@ class EconomyGamble extends PluginBase implements Listener {
 		
 		$this->packet ["RemoveEntityPacket"] = new RemoveEntityPacket ();
 		
-		$this->packet ["AddPlayerPacket"] = new AddPlayerPacket ();
-		$this->packet ["AddPlayerPacket"]->clientID = 0;
-		$this->packet ["AddPlayerPacket"]->yaw = 0;
-		$this->packet ["AddPlayerPacket"]->pitch = 0;
-		$this->packet ["AddPlayerPacket"]->meta = 0;
-		$this->packet ["AddPlayerPacket"]->metadata = [ 
+		$this->packet ["AddEntityPacket"] = new AddEntityPacket ();
+		$this->packet ["AddEntityPacket"]->eid = 0;
+		$this->packet ["AddEntityPacket"]->type = ItemEntity::NETWORK_ID;
+		$this->packet ["AddEntityPacket"]->x = 0;
+		$this->packet ["AddEntityPacket"]->y = 0;
+		$this->packet ["AddEntityPacket"]->z = 0;
+		$this->packet ["AddEntityPacket"]->speedX = 0;
+		$this->packet ["AddEntityPacket"]->speedY = 0;
+		$this->packet ["AddEntityPacket"]->speedZ = 0;
+		$this->packet ["AddEntityPacket"]->yaw = 0;
+		$this->packet ["AddEntityPacket"]->pitch = 0;
+		$this->packet ["AddEntityPacket"]->item = 0;
+		$this->packet ["AddEntityPacket"]->meta = 0;
+		$this->packet ["AddEntityPacket"]->metadata = [ 
 				Entity::DATA_FLAGS => [ 
 						Entity::DATA_TYPE_BYTE,
 						1 << Entity::DATA_FLAG_INVISIBLE 
 				],
-				Entity::DATA_AIR => [ 
-						Entity::DATA_TYPE_SHORT,
-						300 
+				Entity::DATA_NAMETAG => [ 
+						Entity::DATA_TYPE_STRING,
+						"" 
 				],
 				Entity::DATA_SHOW_NAMETAG => [ 
 						Entity::DATA_TYPE_BYTE,
@@ -86,9 +94,6 @@ class EconomyGamble extends PluginBase implements Listener {
 						1 
 				] 
 		];
-		
-		$this->packet ["RemovePlayerPacket"] = new RemovePlayerPacket ();
-		$this->packet ["RemovePlayerPacket"]->clientID = 0;
 		
 		$this->getServer ()->getScheduler ()->scheduleRepeatingTask ( new EconomyGambleTask ( $this ), 20 );
 	}
@@ -154,8 +159,8 @@ class EconomyGamble extends PluginBase implements Listener {
 			}
 			unset ( $this->db ["showCase"] ["{$block->x}.{$block->y}.{$block->z}"] );
 			if (isset ( $this->packetQueue [$player->getName ()] ["nametag"] ["{$block->x}.{$block->y}.{$block->z}"] )) {
-				$this->packet ["RemovePlayerPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] ["{$block->x}.{$block->y}.{$block->z}"];
-				$player->dataPacket ( $this->packet ["RemovePlayerPacket"] ); // 제거패킷 전송
+				$this->packet ["RemoveEntityPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] ["{$block->x}.{$block->y}.{$block->z}"];
+				$player->dataPacket ( $this->packet ["RemoveEntityPacket"] ); // 제거패킷 전송
 			}
 			if (isset ( $this->packetQueue [$player->getName ()] ["{$block->x}.{$block->y}.{$block->z}"] )) {
 				$this->packet ["RemoveEntityPacket"]->eid = $this->packetQueue [$player->getName ()] ["{$block->x}.{$block->y}.{$block->z}"];
@@ -169,6 +174,7 @@ class EconomyGamble extends PluginBase implements Listener {
 		$block = $event->getBlock ();
 		$player = $event->getPlayer ();
 		if (isset ( $this->db ["showCase"] ["{$block->x}.{$block->y}.{$block->z}"] )) {
+			$this->placeQueue [$player->getName ()] = true;
 			if (! isset ( $this->askAgainQueue [spl_object_hash ( $event->getPlayer () )] )) {
 				$this->askAgainQueue [spl_object_hash ( $event->getPlayer () )] = "{$block->x}.{$block->y}.{$block->z}";
 				$this->message ( $event->getPlayer (), $this->get ( "AskAgain" ) . $this->economyAPI->myMoney ( $player ) . " $ ]" );
@@ -187,8 +193,6 @@ class EconomyGamble extends PluginBase implements Listener {
 				case $this->get ( "itemgamble" ) : // 아이템겜블
 					if ($event->getItem ()->getID () == 0) {
 						$this->alert ( $player, $this->get ( "noitem" ) );
-						if ($event->getItem ()->isPlaceable ())
-							$this->placeQueue [$player->getName ()] = true;
 						return;
 					}
 					$rand = mt_rand ( 0, $this->getProbability ( "ItemGambleProbability", 1 ) );
@@ -199,16 +203,12 @@ class EconomyGamble extends PluginBase implements Listener {
 						$player->getInventory ()->removeItem ( Item::get ( $event->getItem ()->getID (), $event->getItem ()->getDamage (), 1 ) );
 						$this->message ( $player, $this->get ( "FailitemGamble" ) );
 					}
-					if ($event->getItem ()->isPlaceable ())
-						$this->placeQueue [$player->getName ()] = true;
 					break;
 				case $this->get ( "randomgamble" ) : // 랜덤겜블
 					$mymoney = $this->economyAPI->myMoney ( $player );
 					if ($mymoney == 0) {
 						$this->message ( $player, $this->get ( "LackOfhMoney" ) );
-						if ($event->getItem ()->isPlaceable ())
-							$this->placeQueue [$player->getName ()] = true;
-						return 0;
+						return;
 					}
 					$pay = mt_rand ( 0, $mymoney );
 					$rand = mt_rand ( 0, $this->getProbability ( "RandomGambleProbability", 1 ) );
@@ -219,15 +219,11 @@ class EconomyGamble extends PluginBase implements Listener {
 						$this->economyAPI->reduceMoney ( $player, $pay );
 						$this->message ( $player, $this->get ( "FailGamble" ) . " $" . $pay . $this->get ( "FailGamble-a" ) );
 					}
-					if ($event->getItem ()->isPlaceable ())
-						$this->placeQueue [$player->getName ()] = true;
 					break;
 				case $this->get ( "lottery" ) :
 					$mymoney = $this->economyAPI->myMoney ( $player );
 					if ($mymoney < $this->probability ["LotteryPrice"]) {
 						$this->message ( $player, $this->get ( "LackOfhMoney" ) );
-						if ($event->getItem ()->isPlaceable ())
-							$this->placeQueue [$player->getName ()] = true;
 						return;
 					}
 					$lotto_c = 0;
@@ -247,8 +243,6 @@ class EconomyGamble extends PluginBase implements Listener {
 					$this->economyAPI->reduceMoney ( $player, $this->getProbability ( "LotteryPrice", 0 ) );
 					$this->message ( $player, $this->get ( "LotteryPayment" ) . $this->lotto [$player->getName ()] ["count"] );
 					$this->message ( $player, $this->get ( "LotteryPayment-a" ) );
-					if ($event->getItem ()->isPlaceable ())
-						$this->placeQueue [$player->getName ()] = true;
 					break;
 				default :
 					if (is_numeric ( $gamble )) { // 겜블
@@ -256,8 +250,6 @@ class EconomyGamble extends PluginBase implements Listener {
 						$mymoney = $this->economyAPI->myMoney ( $player );
 						if ($mymoney < $money) {
 							$this->message ( $player, $this->get ( "LackOfhMoney" ) );
-							if ($event->getItem ()->isPlaceable ())
-								$this->placeQueue [$player->getName ()] = true;
 							return;
 						}
 						$rand = mt_rand ( 0, $this->getProbability ( "GambleProbability", 1 ) );
@@ -268,8 +260,6 @@ class EconomyGamble extends PluginBase implements Listener {
 							$this->economyAPI->reduceMoney ( $player, $money );
 							$this->message ( $player, $this->get ( "FailGamble" ) );
 						}
-						if ($event->getItem ()->isPlaceable ())
-							$this->placeQueue [$player->getName ()] = true;
 					}
 					break;
 			}
@@ -372,8 +362,8 @@ class EconomyGamble extends PluginBase implements Listener {
 						unset ( $this->packetQueue [$player->getName ()] [$gamblePos] );
 					}
 					if (isset ( $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos] )) {
-						$this->packet ["RemovePlayerPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
-						$player->dataPacket ( $this->packet ["RemovePlayerPacket"] ); // 네임택 제거패킷 전송
+						$this->packet ["RemoveEntityPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
+						$player->dataPacket ( $this->packet ["RemoveEntityPacket"] ); // 네임택 제거패킷 전송
 						unset ( $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos] );
 					}
 					continue;
@@ -428,17 +418,20 @@ class EconomyGamble extends PluginBase implements Listener {
 								break;
 						}
 						$this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos] = Entity::$entityCount ++;
-						$this->packet ["AddPlayerPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
-						$this->packet ["AddPlayerPacket"]->clientID = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
-						$this->packet ["AddPlayerPacket"]->username = $nameTag;
-						$this->packet ["AddPlayerPacket"]->x = $explode [0] + 0.4;
-						$this->packet ["AddPlayerPacket"]->y = $explode [1] - 3.2;
-						$this->packet ["AddPlayerPacket"]->z = $explode [2] + 0.4;
-						$player->dataPacket ( $this->packet ["AddPlayerPacket"] );
+						$this->packet ["AddEntityPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
+						$this->packet ["AddEntityPacket"]->clientID = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
+						$this->packet ["AddEntityPacket"]->metadata [Entity::DATA_NAMETAG] = [ 
+								Entity::DATA_TYPE_STRING,
+								$nameTag 
+						];
+						$this->packet ["AddEntityPacket"]->x = $explode [0] + 0.4;
+						$this->packet ["AddEntityPacket"]->y = $explode [1] - 1.2;
+						$this->packet ["AddEntityPacket"]->z = $explode [2] + 0.4;
+						$player->dataPacket ( $this->packet ["AddEntityPacket"] );
 					} else if (isset ( $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos] )) {
-						$this->packet ["RemovePlayerPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
-						$this->packet ["RemovePlayerPacket"]->clientID = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
-						$player->dataPacket ( $this->packet ["RemovePlayerPacket"] ); // 네임택 제거패킷 전송
+						$this->packet ["RemoveEntityPacket"]->eid = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
+						$this->packet ["RemoveEntityPacket"]->clientID = $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos];
+						$player->dataPacket ( $this->packet ["RemoveEntityPacket"] ); // 네임택 제거패킷 전송
 						unset ( $this->packetQueue [$player->getName ()] ["nametag"] [$gamblePos] );
 					}
 				}
