@@ -7,90 +7,94 @@ m_version: 3
 
 #(EN) ENGLISH
 
-en-commands-gamble: "겜블"
-en-commands-gamble-usage: "/겜블 - 이코노미겜블안내"
 
-en-sub-commands-create: "생성"
-en-sub-commands-cancel: "중단"
-en-sub-commands-seegamble: "진행표시"
-
-en-commands-eg-help1: "/겜블 생성 - 겜블기기를 설치합니다 !"
-en-commands-eg-help2: "/겜블 중단 - 겜블설치 작업을 중단합니다 !"
-en-commands-eg-help3: "/겜블 진행표시 - 진행중인 겜블을 표시합니다 !"
-
-en-gamble-help1: "/겜블 생성 <가격> - 해당가격의 겜블기를 설치합니다"
-en-gamble-help2: "/겜블 생성 아이템겜블 - 아이템겜블기를 설치합니다"
-en-gamble-help3: "/겜블 생성 랜덤겜블 - 랜덤겜블기를 설치합니다"
-en-gamble-help4: "/겜블 생성 로또 - 로또기기를 설치합니다"
-
-en-itemgamble: "아이템겜블"
-en-randomgamble: "랜덤겜블"
-en-lottery: "로또"
-
-en-default-prefix: "[ 서버 ]"
-
-en-there-are-no-economyapi: "이코노미 API 플러그인이 없습니다! 플러그인 비활성화 됨!"
-en-gamble-cannot-break: "도박장은 OP만이 파괴할 수 있습니다 !"
-en-gamble-completely-destroyed: "도박장이 성공적으로 파괴되었습니다 !"
-en-gamble-completely-created: "도박장이 성공적으로 설치되었습니다 !"
-en-which-you-want-place-choose-pos: "설치를 시작합니다, 설치를 원하는 부분을 터치해주세요 !"
-en-are-you-want-continue: "설치하려면 이전 명령어를 다시 입력해주세요 !"
-en-you-can-possible-to-cancel: "/겜블 중단 으로 작업 중단가능 !"
-en-all-processing-is-stopped: "진행 중이던 작업들이 중단되었습니다 !"
-
-en-gamble-desc1: "겜블비용 "
-en-gamble-desc2: "터치시 해당금액만큼"
-en-gamble-desc3: "돈을 얻거나 잃습니다!"
-
-en-lottery-desc1: "복권비용 "
-en-lottery-desc2: "터치로 구매가능!"
-en-lottery-desc3: "당첨 시 "
-
-en-randomgamble-desc1: "랜덤겜블 !"
-en-randomgamble-desc2: "터치시 랜덤한 금액을"
-en-randomgamble-desc3: "얻거나 잃습니다 !"
-
-en-itemgamble-desc1: "아이템겜블 !"
-en-itemgamble-desc2: "아이템을 들고 터치시"
-en-itemgamble-desc3: "해당아이템을 하나 더"
-en-itemgamble-desc4: "얻거나 잃습니다 !"
-
-en-SuccessitemGamble: 도박에 성공했습니다 ! (≥∀≤)/ 아이템 하나 더 획득 !
-en-FailitemGamble: 도박에 실패했습니다 ! (づ_ど) 아이템 하나 손실 !
-en-LackOfhMoney: "돈이 부족합니다 ! 도박불가 ! 보유금액 : 0"
-en-SuccessGamble: 도박에 성공했습니다 ! (≥∀≤)/
-en-SuccessGamble-a: 획득 !
-en-FailGamble: 도박에 실패했습니다! (づ_ど)
-en-FailGamble-a: 손실 !
-en-LotteryPayment: '로또를 구매했습니다 ! (≥∀≤)/ 총 : '
-en-LotteryPayment-a: 다음날에 접속하시면 당첨결과를 알려드립니다 !
-en-LotteryCheck: 지난날 로또 당첨결과를 확인합니다 !
-en-LotteryCheck-a: 로또
-en-LotteryCheck-b: 개 모두 꽝 ! (づ_ど)
-en-SuccessLottery: 님이 로또당첨!(≥∀≤)/
-en-SuccessLottery-a: 총
-en-SuccessLottery-b: 개의 로또가 당첨되서
-en-SuccessLottery-c: 달러를 받으셨습니다 !
-en-noitem: 원하는 아이템을 들고 터치해주세요 !
-en-Toomuch-Lottery: "로또는 25장보다 많이 구매하실 수 없습니다 !"
+en-commands-gamble: “gamble”
+en-commands-gamble-usage: "/gamble -economygambleinformation"
 
 
-en-mustnumberic: 2번째줄(원하는금액)은 무조건 숫자여야합니다
-en-GambleSetupFinish: 도박기 세팅에 성공했습니다 !
-en-ItemGambleSetupFinish: 아이템도박기 세팅에 성공했습니다 !
-en-LotterySetupFinish: 로또기기 세팅에 성공했습니다 !
-en-RandomGambleSetupFinish: 랜덤도박기 세팅에 성공했습니다 !
-en-WrongFormat-Sign: 잘못된 형식의 표지판입니다! 도박불가 !
-en-AskAgain: '도박을 하시겠습니까? 진행하려면 다시 탭해주세요. [ 보유금액 :'
-en-Gamblehow-a: 표지판을 양식에맞춰 설치하면
-en-Gamblehow-b: 겜블 표지판을 설치할 수 있습니다
-en-Gamblehow-c: 아래명령어로 양식확인가능
-en-Gamblehow-d: 1.표지판을 설치하세요
-en-Gamblehow-Gamble-a: 2.첫번째줄에 gamble 을 쓰세요
-en-Gamblehow-Gamble-b: 3.두번째줄에 판돈을 쓰세요
-en-Gamblehow-ItemGamble: 2.첫번째줄에 itemgamble 을 쓰세요
-en-Gamblehow-Lottery: 2.첫번째줄에 lottery 를 쓰세요
-en-Gamblehow-Random: 2.첫번째줄에 randomgamble 을 쓰세요
+en-sub-commands-create: “create”
+en-sub-commands-cancel: "cancel"
+en-sub-commands-seegamble: “progress indication”
+
+
+en-commands-eg-help1: "/create gamble - install gambler !"
+en-commands-eg-help2: “/stop gamble - stop gambler installing operation !"
+en-commands-eg-help3: "/see gamble - show progress gamble !"
+
+
+en-gamble-help1: “/create gamble <price> - installing gambler of that price”
+en-gamble-help2: "/create gamble item gamble - install item gambler"
+en-gamble-help3: “/create gamble random gamble - installing random gambler”
+en-gamble-help4: "/create gamble lottery - install lottery gambler"
+
+en-itemgamble: “itemgamble”
+en-randomgamble: "randomgamble"
+en-lottery: “lottery”
+
+en-default-prefix: "[server]"
+
+en-there-are-no-economyapi: “Economy API Plugin do not exist! Plugin disabled!”
+en-gamble-cannot-break: "only OP can destroy casino !"
+en-gamble-completely-destroyed: “Casino was completely destroyed !"
+en-gamble-completely-created: "casino created completely !
+en-which-you-want-place-choose-pos: “Starting installation, Touch the place you want !"
+en-are-you-want-continue: "write again previous command to install!"
+en-you-can-possible-to-cancel: “operation can be stopped by using /stop gamble!"
+en-all-processing-is-stopped: "All processing is stopped !"
+
+en-gamble-desc1: “gambleprice "
+en-gamble-desc2: "when you touch, that amount of money”
+en-gamble-desc3: “will be gained or lost”
+
+en-lottery-desc1: "lottery cost"
+en-lottery-desc2: “purchase available by touching!”
+en-lottery-desc3: "when you win"
+
+en-randomgamble-desc1: “randomgamble !"
+en-randomgamble-desc2: “when you touch, random cost will be”
+en-randomgamble-desc3: “gained or lost !"
+
+en-itemgamble-desc1: "item gamble !"
+en-itemgamble-desc2: “when you touch while holding an item”
+en-itemgamble-desc3: “you will get that item“
+en-itemgamble-desc4: “one more, or lose it !"
+
+en-SuccessitemGamble: Win the gamble ! (≥∀≤)/ Get one more item !
+en-FailitemGamble: Fail the gamble ! (づ_ど) Lose one item !
+en-LackOfhMoney: "No money ! You can't do any gamble ! Your money : 0"
+en-SuccessGamble: gambling succeed ! (≥∀≤)/
+en-SuccessGamble-a: gain !
+en-FailGamble: gambling failed! (づ_ど)
+en-FailGamble-a: less !
+en-LotteryPayment: ‘lottery purchased ! (≥∀≤)/ total : '
+en-LotteryPayment-a: Notice you the result when you access tomorrow !
+en-LotteryCheck: checking the lottery result of the last day !
+en-LotteryCheck-a: Lottery
+en-LotteryCheck-b: tries all failed ! (づ_ど)
+en-SuccessLottery: has winned lottery!(≥∀≤)/
+en-SuccessLottery-a: total
+en-SuccessLottery-b: tries successful
+en-SuccessLottery-c: dollars were received !
+en-noitem: Touch with your item you want !
+en-Toomuch-Lottery: “lottery cannot be purchased more than 25 !"
+
+
+en-mustnumberic: Second line(money you want)must be number
+en-GambleSetupFinish: setting gambler succeed !
+en-ItemGambleSetupFinish: Finish the gamble setup !
+en-LotterySetupFinish: setting lottery device succeed !
+en-RandomGambleSetupFinish: Finish the random gamble setup !
+en-WrongFormat-Sign: Invalid format of sign! Gambling impossible !
+en-AskAgain: 'Do you want to do gambling? Tap again if you want [ Your money :'
+en-Gamblehow-a: If you install the sign in a right form
+en-Gamblehow-b: You can install the gamble sign
+en-Gamblehow-c: you can check the form by using command below
+en-Gamblehow-d: 1.Please install the sign
+en-Gamblehow-Gamble-a: 2.write ‘gamble’ in 1st line
+en-Gamblehow-Gamble-b: 3.Put in the second line money
+en-Gamblehow-ItemGamble: 2.write ‘item gamble’ in 1st line
+en-Gamblehow-Lottery: 2.Put in the first line lottery
+en-Gamblehow-Random: 2.write ‘random gamble’ in 1st line
 
 
 #(KO) KOREAN
