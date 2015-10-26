@@ -7,6 +7,92 @@ m_version: 3
 
 #(EN) ENGLISH
 
+en-commands-gamble: "겜블"
+en-commands-gamble-usage: "/겜블 - 이코노미겜블안내"
+
+en-sub-commands-create: "생성"
+en-sub-commands-cancel: "중단"
+en-sub-commands-seegamble: "진행표시"
+
+en-commands-eg-help1: "/겜블 생성 - 겜블기기를 설치합니다 !"
+en-commands-eg-help2: "/겜블 중단 - 겜블설치 작업을 중단합니다 !"
+en-commands-eg-help3: "/겜블 진행표시 - 진행중인 겜블을 표시합니다 !"
+
+en-gamble-help1: "/겜블 생성 <가격> - 해당가격의 겜블기를 설치합니다"
+en-gamble-help2: "/겜블 생성 아이템겜블 - 아이템겜블기를 설치합니다"
+en-gamble-help3: "/겜블 생성 랜덤겜블 - 랜덤겜블기를 설치합니다"
+en-gamble-help4: "/겜블 생성 로또 - 로또기기를 설치합니다"
+
+en-itemgamble: "아이템겜블"
+en-randomgamble: "랜덤겜블"
+en-lottery: "로또"
+
+en-default-prefix: "[ 서버 ]"
+
+en-there-are-no-economyapi: "이코노미 API 플러그인이 없습니다! 플러그인 비활성화 됨!"
+en-gamble-cannot-break: "도박장은 OP만이 파괴할 수 있습니다 !"
+en-gamble-completely-destroyed: "도박장이 성공적으로 파괴되었습니다 !"
+en-gamble-completely-created: "도박장이 성공적으로 설치되었습니다 !"
+en-which-you-want-place-choose-pos: "설치를 시작합니다, 설치를 원하는 부분을 터치해주세요 !"
+en-are-you-want-continue: "설치하려면 이전 명령어를 다시 입력해주세요 !"
+en-you-can-possible-to-cancel: "/겜블 중단 으로 작업 중단가능 !"
+en-all-processing-is-stopped: "진행 중이던 작업들이 중단되었습니다 !"
+
+en-gamble-desc1: "겜블비용 "
+en-gamble-desc2: "터치시 해당금액만큼"
+en-gamble-desc3: "돈을 얻거나 잃습니다!"
+
+en-lottery-desc1: "복권비용 "
+en-lottery-desc2: "터치로 구매가능!"
+en-lottery-desc3: "당첨 시 "
+
+en-randomgamble-desc1: "랜덤겜블 !"
+en-randomgamble-desc2: "터치시 랜덤한 금액을"
+en-randomgamble-desc3: "얻거나 잃습니다 !"
+
+en-itemgamble-desc1: "아이템겜블 !"
+en-itemgamble-desc2: "아이템을 들고 터치시"
+en-itemgamble-desc3: "해당아이템을 하나 더"
+en-itemgamble-desc4: "얻거나 잃습니다 !"
+
+en-SuccessitemGamble: 도박에 성공했습니다 ! (≥∀≤)/ 아이템 하나 더 획득 !
+en-FailitemGamble: 도박에 실패했습니다 ! (づ_ど) 아이템 하나 손실 !
+en-LackOfhMoney: "돈이 부족합니다 ! 도박불가 ! 보유금액 : 0"
+en-SuccessGamble: 도박에 성공했습니다 ! (≥∀≤)/
+en-SuccessGamble-a: 획득 !
+en-FailGamble: 도박에 실패했습니다! (づ_ど)
+en-FailGamble-a: 손실 !
+en-LotteryPayment: '로또를 구매했습니다 ! (≥∀≤)/ 총 : '
+en-LotteryPayment-a: 다음날에 접속하시면 당첨결과를 알려드립니다 !
+en-LotteryCheck: 지난날 로또 당첨결과를 확인합니다 !
+en-LotteryCheck-a: 로또
+en-LotteryCheck-b: 개 모두 꽝 ! (づ_ど)
+en-SuccessLottery: 님이 로또당첨!(≥∀≤)/
+en-SuccessLottery-a: 총
+en-SuccessLottery-b: 개의 로또가 당첨되서
+en-SuccessLottery-c: 달러를 받으셨습니다 !
+en-noitem: 원하는 아이템을 들고 터치해주세요 !
+en-Toomuch-Lottery: "로또는 25장보다 많이 구매하실 수 없습니다 !"
+
+
+en-mustnumberic: 2번째줄(원하는금액)은 무조건 숫자여야합니다
+en-GambleSetupFinish: 도박기 세팅에 성공했습니다 !
+en-ItemGambleSetupFinish: 아이템도박기 세팅에 성공했습니다 !
+en-LotterySetupFinish: 로또기기 세팅에 성공했습니다 !
+en-RandomGambleSetupFinish: 랜덤도박기 세팅에 성공했습니다 !
+en-WrongFormat-Sign: 잘못된 형식의 표지판입니다! 도박불가 !
+en-AskAgain: '도박을 하시겠습니까? 진행하려면 다시 탭해주세요. [ 보유금액 :'
+en-Gamblehow-a: 표지판을 양식에맞춰 설치하면
+en-Gamblehow-b: 겜블 표지판을 설치할 수 있습니다
+en-Gamblehow-c: 아래명령어로 양식확인가능
+en-Gamblehow-d: 1.표지판을 설치하세요
+en-Gamblehow-Gamble-a: 2.첫번째줄에 gamble 을 쓰세요
+en-Gamblehow-Gamble-b: 3.두번째줄에 판돈을 쓰세요
+en-Gamblehow-ItemGamble: 2.첫번째줄에 itemgamble 을 쓰세요
+en-Gamblehow-Lottery: 2.첫번째줄에 lottery 를 쓰세요
+en-Gamblehow-Random: 2.첫번째줄에 randomgamble 을 쓰세요
+
+
 #(KO) KOREAN
 ko-commands-gamble: "겜블"
 ko-commands-gamble-usage: "/겜블 - 이코노미겜블안내"
